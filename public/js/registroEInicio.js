@@ -42,7 +42,7 @@ $(document).ready(()=>{
 
     $("#register").click(()=>{
         swal({
-            title: "<h2>Registrate</h2>",
+            title: "<h2>Regístrate</h2>",
             type: "info",
             html: `
             <form>
@@ -62,7 +62,7 @@ $(document).ready(()=>{
                     <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie </small>
 
                     <br>
-                    
+
                     <label for="inputPassword">Contraseña</label>
                     <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña">
                 </div>
