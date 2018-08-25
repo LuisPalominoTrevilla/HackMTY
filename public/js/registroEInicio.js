@@ -1,6 +1,6 @@
 $(document).ready(()=>{
 
-    $("#loginOrRegister").click(()=>{
+    $("#login").click(()=>{
             swal({
                 title: "<h2>Inicia sesión o registrate</h2>",
                 type: "info",
@@ -15,27 +15,29 @@ $(document).ready(()=>{
                         <label for="inputPassword">Contraseña</label>
                         <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña">
                     </div>
-                </form> 
-                <button type="button" class="btn btn-outline-primary" id="register">Regístrate</button>
-                <button type="button" class="btn btn-outline-secondary" id="login">Inicia sesión</button>
-                `,
+                </form> `,
                 showCancelButton: false,
-                showConfirmButton: false
+                confirmButtonText: "Inicia sesión"
+            }).then((result)=>{
+                if(result.value){
+                    let username = document.getElementById('email').value;
+                    let password = document.getElementById('inputPassword').value;
+                    console.log(username);
+                    console.log(password);
+                    swal(
+                        'Exito!',
+                        'iniciarás sesión en un segundo',
+                        'success'
+                      )
+                }
+                else{
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Algo salió mal!',
+                      })
+                }
             });
-            $("#register").click(()=>{
-                let username = document.getElementById('email').value;
-                let password = document.getElementById('inputPassword').value;
-                console.log(username);
-                console.log(password);
-
-            })
-        
-            $("#login").click(()=>{
-                let username = document.getElementById('email').value;
-                let password = document.getElementById('inputPassword').value;
-                console.log(username);
-                console.log(password);
-            })
     });
 
 })  
