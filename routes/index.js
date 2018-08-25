@@ -23,4 +23,8 @@ router.get('/negocio', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../public/negocio.html'));
 });
 
+router.get('/googlemaps.html', (req,res,next) =>{
+  res.render('googlemaps');
+});
+
 module.exports = router;
