@@ -4,27 +4,23 @@ var path = require('path');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.render('index');
 });
 
 router.get('/about', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../public/about.html'));
+  res.render('about');
 });
 
 router.get('/listing', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../public/listing.html'));
+  res.render('listing');
 });
 
 router.get('/contact', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../public/contact.html'));
+  res.render('contact');
 });
 
 router.get('/negocio', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../public/negocio.html'));
-});
-
-router.get('/googlemaps.html', (req,res,next) =>{
-  res.render('googlemaps');
+  res.render('negocio');
 });
 
 module.exports = router;
