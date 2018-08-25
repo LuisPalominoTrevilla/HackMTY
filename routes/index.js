@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/googlemaps.html', (req,res,next) =>{
+  res.render('googlemaps');
+});
+
 module.exports = router;
