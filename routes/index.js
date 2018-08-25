@@ -19,4 +19,8 @@ router.get('/contact', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../public/contact.html'));
 });
 
+router.get('/negocio/:name', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../public/negocio.html'));
+});
+
 module.exports = router;
