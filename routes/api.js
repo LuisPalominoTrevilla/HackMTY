@@ -50,6 +50,14 @@ router.post('/login', (req, res, next) => {
       }
     });
   });
-})
+});
+
+router.post('/logout', (req, res, next) => {
+  if (req.session.authenticated) {
+    console.log(req.session);
+  } else {
+    res.send(false);
+  }
+});
 
 module.exports = router;
