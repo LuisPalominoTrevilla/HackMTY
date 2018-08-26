@@ -19,7 +19,7 @@ $(document).ready(()=>{
                 showCancelButton: false,
                 confirmButtonText: "Inicia sesión"  
             }).then((result)=>{
-                if(result.value){
+                if(result.value  && document.getElementById('username').value != "" && document.getElementById('inputPassword').value != ""){
                     let username = document.getElementById('username').value;
                     let password = document.getElementById('inputPassword').value;
                     $.post('/api/login', {
