@@ -27,14 +27,14 @@
                             <div class="tab-pane fade show active" id="nav-places" role="tabpanel" aria-labelledby="nav-places-tab">
                                 <h6>¿Qu&eacute; est&aacute;s buscando?</h6>
                                 <form action="#" method="get">
-                                    <select class="custom-select">
+                                    <select class="custom-select" id="zone">
                                         <option selected>Todas las zonas</option>
                                         <option value="1">Zona Real</option>
                                         <option value="2">Providencia</option>
                                         <option value="3">Centro</option>
                                         <option value="4">Ciudad del Sol</option>
                                     </select>
-                                    <select class="custom-select">
+                                    <select class="custom-select" id="cat">
                                         <option selected>Todas las categor&iacute;as</option>
                                         <option value="1">Restaurantes</option>
                                         <option value="2">Tienditas</option>
@@ -42,9 +42,7 @@
                                         <option value="4">Servicios</option>
                                         <option value="3">Otros</option>
                                     </select>
-                                    <a href="listing">
-                                      <button type="button" class="btn dorne-btn" ><i class="fa fa-search pr-2" aria-hidden="true"></i> Buscar</button>
-                                    </a>
+                                      <button type="button" class="btn dorne-btn" id="search-btn"><i class="fa fa-search pr-2" aria-hidden="true"></i> Buscar</button>
                                 </form>
                             </div>
                         </div>
@@ -69,7 +67,7 @@
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.2s">
                                     <div class="catagory-content">
                                         <img src="img/core-img/icon-2.png" alt="">
-                                        <a href="#">
+                                        <a href="/listing?cat=Restaurantes&zone=">
                                             <h6>Restaurantes</h6>
                                         </a>
                                     </div>
@@ -80,7 +78,7 @@
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.4s">
                                     <div class="catagory-content">
                                         <img src="img/core-img/icon-3.png" alt="">
-                                        <a href="#">
+                                        <a href="/listing?cat=Tienditas&zone=">
                                             <h6>Tienditas</h6>
                                         </a>
                                     </div>
@@ -91,7 +89,7 @@
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.6s">
                                     <div class="catagory-content">
                                         <img src="img/core-img/icon-4.png" alt="">
-                                        <a href="#">
+                                        <a href="/listing?cat=Belleza&zone=">
                                             <h6>Belleza</h6>
                                         </a>
                                     </div>
@@ -102,7 +100,7 @@
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.8s">
                                     <div class="catagory-content">
                                         <img src="img/core-img/icon-1.png" alt="">
-                                        <a href="#">
+                                        <a href="/listing?cat=Servicios&zone=">
                                             <h6>Servicios</h6>
                                         </a>
                                     </div>
@@ -113,7 +111,7 @@
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="1s">
                                     <div class="catagory-content">
                                         <img src="img/core-img/icon-5.png" alt="">
-                                        <a href="#">
+                                        <a href="/listing?cat=Otros&zone=">
                                             <h6>Otros</h6>
                                         </a>
                                     </div>
@@ -135,7 +133,7 @@
                     <div class="about-content text-center">
                         <h2>CONSUME LOCAL, <br><span>OBT&Eacute;N recompensas.</span></h2>
                         <p>&Uacute;nte a SolidarioMX, la plataforma que te permite descubrir negocios locales de tu comunidad<br>y te recompenza por consumir en ellos.</p>
-                        <p><br><a href="#" class="btn dorne-btn">¿Cómo funciona?</a></p>
+                        <p><br><a href="/about" class="btn dorne-btn">¿Cómo funciona?</a></p>
                     </div>
                 </div>
             </div>
@@ -162,7 +160,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </footer>
     <!-- ****** Footer Area End ****** -->
-
+    <script src="js/search.js"></script>
     <!-- Active JS -->
     <script src="js/active.js"></script>
 

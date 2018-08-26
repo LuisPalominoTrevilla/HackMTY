@@ -53,11 +53,14 @@ router.get('/transaction/:id', (req,res,next) => {
       let user_id = req.session.client_id;
       let trans_id = req.params.id;
       pool.getConnection((err,con) => {
-        if(err) throw err;
+        if(err){
+          con.release();
+          throw err;
+        }
         con.query('SELECT client_id, points FROM transaction WHERE trans_id=' + mysql.escape(trans_id), (err, results) => {
           if(err){
-            throw err;
             con.release();
+            throw err;
           }
           if(results.length == 0){
             res.redirect('/');
@@ -67,26 +70,26 @@ router.get('/transaction/:id', (req,res,next) => {
           if(results[0].client_id == null){
             con.query('UPDATE transaction SET client_id=' + mysql.escape(user_id) + ' WHERE trans_id=' + mysql.escape(trans_id), (err, answer) => {
               if(err){
-                throw err;
                 con.release();
+                throw err;
               }
               con.query('SELECT score FROM client WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
                 if(err){
-                  throw err;
                   con.release();
+                  throw err;
                 }
                 let sum = answer[0].score + trans_points;
                 if(sum >= 0){
                   con.query('UPDATE client SET score=' + mysql.escape(sum) +' WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
                     if(err){
-                      throw err;
                       con.release();
+                      throw err;
                     }
                     con.query('SELECT names FROM client WHERE client_id = ' + mysql.escape(user_id), (err, answer) => {
-                      if(err) throw err;
                       con.release();
-                      if(trans_points > 0) res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAZ GANADO " + trans_points + " PUNTOS!"});
-                      else res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAZ CANJEADO " + trans_points*-1 + " PUNTOS!"});
+                      if(err) throw err;
+                      if(trans_points > 0) res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAS GANADO " + trans_points + " PUNTOS!"});
+                      else res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAS CANJEADO " + trans_points*-1 + " PUNTOS!"});
                     });
                   });
                 } else {

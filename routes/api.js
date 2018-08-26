@@ -19,6 +19,43 @@ router.get('/getNegocios', (req, res, next) => {
   });
 });
 
+router.get('/getNegociosOneParam', (req, res, next) => {
+  if(req.query != null){
+    if(req.query.type == "zone"){
+      pool.getConnection((err, con) => {
+        if (err) throw err;
+        con.query("SELECT shop_id, shop_name, direction, c.display_name AS category, s.picture, z.zone_name AS zone FROM shop s JOIN category c ON s.category = c.cat_id JOIN zone z ON s.zone = z.zone_id WHERE z.zone_name = " + mysql.escape(decodeURI(req.query.value)), (err, result) => {
+          con.release();
+          if (err) throw err;
+          res.json(result);
+        });
+      });
+    } else {
+      pool.getConnection((err, con) => {
+        if (err) throw err;
+        con.query("SELECT shop_id, shop_name, direction, c.display_name AS category, s.picture, z.zone_name AS zone FROM shop s JOIN category c ON s.category = c.cat_id JOIN zone z ON s.zone = z.zone_id WHERE c.display_name = " + mysql.escape(decodeURI(req.query.value)), (err, result) => {
+          con.release();
+          if (err) throw err;
+          res.json(result);
+        });
+      });
+    }
+  }
+});
+
+router.get('/getNegociosTwoParam', (req, res, next) => {
+  if(req.query != null){
+    pool.getConnection((err, con) => {
+      if (err) throw err;
+      con.query("SELECT shop_id, shop_name, direction, c.display_name AS category, s.picture, z.zone_name AS zone FROM shop s JOIN category c ON s.category = c.cat_id JOIN zone z ON s.zone = z.zone_id WHERE c.display_name = " + mysql.escape(decodeURI(req.query.cat)) + " AND z.zone_name = " + mysql.escape(decodeURI(req.query.zone)), (err, result) => {
+        con.release();
+        if (err) throw err;
+        res.json(result);
+      });
+    });
+  }
+});
+
 router.post('/createTransaction', (req,res,next) =>{
   if(req.session.authenticated && !req.session.isUser){
     pool.getConnection((err, con) => {
