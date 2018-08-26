@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" type="text/css" href="css/profile.css">
-        <% include Reusable/head.ejs %>        
+        <% include Reusable/head.ejs %>
     </head>
 
     <body>
@@ -25,8 +25,8 @@
                     <div class="col-12">
                         <div class="about-content text-center">
                         <br><br>
-                            <img src="/img/defaultBusiness.png" alt="Smiley face" height="200" width="200" id="profileImage">
-                            <h2>Negocio <span>Tienda</span></h2>
+                            <img src="<%= picture %>" alt="Smiley face" style="width: 200px; height: 200px !important" id="profileImage">
+                            <h2><span><%= shop_name %></span></h2>
                             <p>Bienvenido</p>
 
                         <form>
