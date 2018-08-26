@@ -37,8 +37,11 @@ router.get('/contact', (req, res, next) => {
 
 router.get('/profile', (req,res,next) => {
   // Restrict access to unauthorized personel
-  if (!req.session.authenticated || !req.session.isUser) {
+  if (!req.session.authenticated) {
     res.redirect( '/');
+    return;
+  }else if (!req.session.isUser){
+    res.render('local', {auth: req.session.authenticated, avatar: req.avatar});
     return;
   }
   res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
@@ -47,10 +50,6 @@ router.get('/profile', (req,res,next) => {
 router.get('/transaction', (req,res,next) => {
   res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar});
 });
-
-router.get('/local', (req,res,next) =>{
-  res.render('local', {auth: req.session.authenticated})
-})
 
 router.get('/negocio/:id', (req, res, next) => {
   let shop_id = req.params.id;
