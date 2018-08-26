@@ -41,7 +41,6 @@ router.post('/login', (req, res, next) => {
         req.session.client_id = result[0].client_id;
         req.session.name = result[0].name;
         req.session.isUser = true;
-        req.session.mail = result[0].mail;
         req.session.authenticated = true;
         res.send(true);
       }else {

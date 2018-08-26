@@ -8,7 +8,8 @@ const gravatar = require('gravatar-api');
 router.use((req, res, next) => {
   if(req.session.authenticated && req.session.isUser) {
     let options = {
-      email: req.session.mail
+      email: req.session.name,
+      parameters: { "size": "200"}
     }
     req.avatar = gravatar.imageUrl(options);
   }
