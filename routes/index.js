@@ -1,28 +1,49 @@
-var express = require('express');
-var router = express.Router();
-var path = require('path');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
 const pool = require('../db');
 const mysql = require('mysql');
+const gravatar = require('gravatar-api');
+
+router.use((req, res, next) => {
+  if(req.session.authenticated && req.session.isUser) {
+    let options = {
+      email: req.session.mail,
+      parameters: { "size": "200"}
+    }
+    req.avatar = gravatar.imageUrl(options);
+  }
+  next();
+});
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', {auth: req.session.authenticated});
+  res.render('index', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/about', (req, res, next) => {
-  res.render('about', {auth: req.session.authenticated});
+  res.render('about', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/listing', (req, res, next) => {
-  res.render('listing', {auth: req.session.authenticated});
+  res.render('listing', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/contact', (req, res, next) => {
-  res.render('contact', {auth: req.session.authenticated});
+  res.render('contact', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/profile', (req,res,next) => {
-  res.render('profile', {auth: req.session.authenticated});
+  // Restrict access to unauthorized personel
+  if (!req.session.authenticated || !req.session.isUser) {
+    res.redirect( '/');
+    return;
+  }
+  res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
+});
+
+router.get('/transaction', (req,res,next) => {
+  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/local', (req,res,next) =>{
@@ -37,7 +58,7 @@ router.get('/negocio/:id', (req, res, next) => {
       con.release();
       if(err) throw err;
       if(results.length != 0) {
-        res.render('negocio', { image: results[0].picture, name: results[0].shop_name, direction: results[0].direction, category: results[0].category, lat: results[0].latitude, lgt: results[0].longitude, auth: req.session.authenticated });
+        res.render('negocio', { image: results[0].picture, name: results[0].shop_name, direction: results[0].direction, category: results[0].category, lat: results[0].latitude, lgt: results[0].longitude, auth: req.session.authenticated, avatar: req.avatar });
       }else{
         next();
       }

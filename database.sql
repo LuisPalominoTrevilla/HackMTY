@@ -51,6 +51,7 @@ CREATE TABLE transaction (
     client_id INTEGER UNSIGNED,
     shop_id INTEGER UNSIGNED NOT NULL,
     trans_type ENUM('buy', 'exchange') NOT NULL,
+    ALTER TABLE transaction ADD score INTEGER NOT NULL,
     PRIMARY KEY (trans_id),
     CONSTRAINT cl_fk FOREIGN KEY (client_id) REFERENCES client(client_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
