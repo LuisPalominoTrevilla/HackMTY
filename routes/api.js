@@ -24,12 +24,10 @@ router.post('/createTransaction', (req,res,next) =>{
     pool.getConnection((err, con) => {
       con.query("SELECT trans_id FROM transaction", (err, result)=>{ 
         while(true){
-          var shop_id = req.body.shop_id;
-          var client_id = null;
+          var shop_id = req.session.shop_id;
           var trans_type = req.body.trans_type;
           var points = req.body.points;
           var repeated = false;
-
           var randomOptions = {
             min: 1,
             max: 999999999,
@@ -47,12 +45,10 @@ router.post('/createTransaction', (req,res,next) =>{
             break;
           }
         }
-        var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '"2018-08-26 07:07:08",' + shop_id +',"'+ trans_type +'"' + ',' + 1 +')';   
-        res.send(sql);
-        
+        var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '"2018-08-26 07:07:08",' + shop_id +',"'+ trans_type +'"' + ',' + points +')';   
         con.query(sql, (err,result)=>{
           if(err) throw err;
-          res.send(sql);  
+          res.send(200, new_id);
         })
       });
     });
