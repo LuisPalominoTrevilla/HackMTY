@@ -19,7 +19,7 @@ router.get('/contact', (req, res, next) => {
   res.render('contact');
 });
 
-router.get('/negocio', (req, res, next) => {
+router.get('/negocio/:id', (req, res, next) => {
   res.render('negocio');
 });
 
