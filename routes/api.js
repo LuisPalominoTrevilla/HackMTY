@@ -54,7 +54,8 @@ router.post('/login', (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
   if (req.session.authenticated) {
-    req.session.authenticated = null;
+    req.session = null;
+    console.log(req.session);
     res.send(true);
   } else {
     res.send(false);
