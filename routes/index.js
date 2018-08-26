@@ -50,33 +50,41 @@ router.get('/transaction/:id', (req,res,next) => {
       pool.getConnection((err,con) => {
         if(err) throw err;
         con.query('SELECT client_id, points FROM transaction WHERE trans_id=' + mysql.escape(trans_id), (err, results) => {
-          con.release();
-          if(err) throw err;
+          if(err){
+            throw err;
+            con.release();
+          }
+          let trans_points = results[0].points;
           if(results[0].client_id == null){
-            console.log("NO HABIA ID");
             con.query('UPDATE transaction SET client_id=' + mysql.escape(user_id) + ' WHERE trans_id=' + mysql.escape(trans_id), (err, answer) => {
-              con.release();
-              if(err) throw err;
-            console.log(answer);
+              if(err){
+                throw err;
+                con.release();
+              }
+              con.query('UPDATE client SET score=score+' + mysql.escape(results[0].points) +' WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
+                if(err){
+                  throw err;
+                  con.release();
+                }
+                con.query('SELECT names FROM client WHERE client_id = ' + mysql.escape(user_id), (err, answer) => {
+                  if(err) throw err;
+                  con.release();
+                  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names, points: trans_points});
+                });
+              });
             });
           } else {
-            console.log("YA HAY ID");
-            next();
+            res.redirect('/');
+            return;
           }
         });
       });
-      //res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: ""});
     } else {
       res.render('index', {auth: req.session.authenticated, avatar: req.avatar});
     }
   } else {
-    res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "/js/loginForced.js"});
+    res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "/js/loginForced.js", name: "", points: ""});
   }
-  //let trans_id = req.params.id;
-  //let user_id = req.session.client_id;
-  //pool.getConnection((err, con) => {
-  //  con.query('SELECT ')
-  //});
 
 });
 
