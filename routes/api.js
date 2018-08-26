@@ -19,6 +19,24 @@ router.get('/getNegocios', (req, res, next) => {
   });
 });
 
+router.get('/getTransactions', (req, res, next) => {
+  sql = "";
+  if (req.session.authenticated && req.session.isUser) {
+    sql = "SELECT t.trans_date, t.trans_type, t.points, s.shop_name FROM transaction t JOIN shop s ON t.shop_id = s.shop_id WHERE t.client_id = "+mysql.escape(req.session.client_id)+" ORDER BY t.trans_date DESC";
+  }else if (req.session.authenticated && !req.session.isUser) {
+    sql = "SELECT t.trans_date, t.trans_type, t.points, CONCAT(c.names, ' ' , c.last_names) As name FROM transaction t JOIN client c ON t.client_id = c.client_id WHERE t.shop_id = "+mysql.escape(req.session.shop_id)+" ORDER BY t.trans_date DESC";
+  }
+  console.log(sql);
+  pool.getConnection((err, con) => {
+    if (err) throw err;
+    con.query(sql, (err, result) => {
+      con.release();
+      if (err) throw err;
+      res.json(result);
+    });
+  });
+});
+
 router.post('/createTransaction', (req,res,next) =>{
   if(req.session.authenticated && !req.session.isUser){
     pool.getConnection((err, con) => {
@@ -45,11 +63,20 @@ router.post('/createTransaction', (req,res,next) =>{
             break;
           }
         }
-        var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '"2018-08-26 07:07:08",' + shop_id +',"'+ trans_type +'"' + ',' + points +')';
+        let NOW = new Date();
+        var options = { day: 'numeric', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+        NOW = NOW.toLocaleDateString('en-US', options).replace(" AM", "").replace(",", "").split(" ");
+        const month = NOW[0].split('/')[0];
+        const day = NOW[0].split('/')[1];
+        const year = NOW[0].split('/')[2];
+        NOW = year + "-" + month + "-" + day + " " + NOW[1];
+        console.log(NOW);
+        var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', "' + NOW  + '"' + "," + shop_id +',"'+ trans_type +'"' + ',' + points +')';
+        console.log(sql)
         con.query(sql, (err,result)=>{
           if(err) throw err;
           res.send(200, new_id);
-        })
+        });
       });
     });
   }
