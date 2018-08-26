@@ -87,7 +87,7 @@ router.post('/login', (req, res, next) => {
     }else if (!isNaN(username)) {
       // It's a shop
       username = parseInt(username);
-      con.query("SELECT shop_id, picture FROM shop WHERE shop_id = " +mysql.escape(username) + " and password = " + mysql.escape(password), (err, result) => {
+      con.query("SELECT shop_id, shop_name, picture FROM shop WHERE shop_id = " +mysql.escape(username) + " and password = " + mysql.escape(password), (err, result) => {
         console.log(result);
         con.release();
         if (err) throw err;
@@ -97,6 +97,7 @@ router.post('/login', (req, res, next) => {
           req.session.isUser = false;
           req.session.shop_id = result[0].shop_id;
           req.session.picture = result[0].picture;
+          req.session.shop_name = result[0].shop_name;
           res.send(true);
         }else{
           // couldn't sign in

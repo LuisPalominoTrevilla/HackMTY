@@ -41,7 +41,7 @@ router.get('/profile', (req,res,next) => {
     res.redirect( '/');
     return;
   }else if (!req.session.isUser){
-    res.render('local', {auth: req.session.authenticated, avatar: req.avatar});
+    res.render('local', {auth: req.session.authenticated, avatar: req.avatar, picture: req.session.picture, shop_name: req.session.shop_name});
     return;
   }
   res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
@@ -97,7 +97,8 @@ router.get('/transaction/:id', (req,res,next) => {
         });
       });
     } else {
-      res.render('index', {auth: req.session.authenticated, avatar: req.avatar});
+      res.redirect('/');
+      return;
     }
   } else {
     res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "/js/loginForced.js", name: "", points: ""});
