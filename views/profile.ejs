@@ -28,6 +28,55 @@
                             <img src="<%= avatar %>" alt="Smiley face" height="200" width="200" id="profileImage">
                             <h2><%= name %> <span><%= last_name %></span></h2>
                             <p>Bienvenido, en este momento cuentas con <span style="font-size: 25px; font-weight: bold"><%= score %>pts</span></p>
+                        
+                            <br>
+
+                            <p>Historial de transacciones:</p>
+
+                            <div id="transactions-container">
+                                    <table class="table table-striped">
+                                            <thead>
+                                              <tr class="table-head">
+                                                <th scope="col">#</th>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Tienda</th>
+                                                <th scope="col">tipo</th>
+                                                <th scope="col">Puntos</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>24-04-2018 04:03:21</td>
+                                                    <td>taquitos</td>
+                                                    <td>buy</td>
+                                                    <td>7</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>15-04-2018 04:03:31</td>
+                                                    <td>lonches</td>
+                                                    <td>buy</td>
+                                                    <td>2</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>20-04-2018 10:03:21</td>
+                                                    <td>tequila</td>
+                                                    <td>buy</td>
+                                                    <td>3</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">4</th>
+                                                    <td>10-02-2018 02:01:21</td>
+                                                    <td>mariscos</td>
+                                                    <td>exchange</td>
+                                                    <td>-5</td>
+                                                </tr>
+                                            </tbody>
+                                          </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
