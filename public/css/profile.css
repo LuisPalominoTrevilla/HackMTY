@@ -1,0 +1,13 @@
+#profileImage{
+    border-radius: 100%;
+}
+
+#dropdownMenuButton{
+    background-color: transparent !important;
+    border-color: transparent !important;
+    margin-left: 50px;
+}
+
+#dropdownMenuButton{
+    cursor: pointer;
+}
