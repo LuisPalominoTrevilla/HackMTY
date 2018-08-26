@@ -23,27 +23,33 @@ router.post('/login', (req, res, next) => {
   let password = req.body.password;
   pool.getConnection((err, con) => {
     if (err) throw err;
-    con.query("SELECT client_id, CONCAT(names, ' ', last_names), mail AS name FROM client WHERE mail = " + mysql.escape(username) + " AND password = "+ mysql.escape(password), (err, result) => {
-      con.release();
-      if (err) throw err;
-      if (result.length) {
-        req.session.client_id = result[0].client_id;
-        req.session.name = result[0].name;
-        req.session.isUser = true;
-        req.session.authenticated = true;
-        res.send(true);
-      }else {
-        // Couldn't sign in
-        res.send(false);
-      }
-    });
+    if (username.includes("@")){
+      con.query("SELECT client_id, score, names AS name, last_names AS last_name, mail FROM client WHERE mail = " + mysql.escape(username) + " AND password = "+ mysql.escape(password), (err, result) => {
+        con.release();
+        if (err) throw err;
+        if (result.length) {
+          req.session.client_id = result[0].client_id;
+          req.session.name = result[0].name;
+          req.session.last_name = result[0].last_name;
+          req.session.mail = result[0].mail;
+          req.session.isUser = true;
+          req.session.score = result[0].score;
+          req.session.authenticated = true;
+          res.send(true);
+        }else {
+          // Couldn't sign in
+          res.send(false);
+        }
+      });
+    }else {
+      res.send(false);
+    }
   });
 });
 
 router.post('/logout', (req, res, next) => {
   if (req.session.authenticated) {
-    req.session = null;
-    console.log(req.session);
+    req.session.authenticated = false;
     res.send(true);
   } else {
     res.send(false);
