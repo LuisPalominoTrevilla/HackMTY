@@ -44,7 +44,15 @@ router.get('/profile', (req,res,next) => {
     res.render('local', {auth: req.session.authenticated, avatar: req.avatar, picture: req.session.picture, shop_name: req.session.shop_name});
     return;
   }
-  res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
+  pool.getConnection((err, con)=>{
+    if(err) throw err;
+    con.query('SELECT score FROM client WHERE client_id ='+mysql.escape(req.session.client_id), (err, result)=>{
+      con.release();
+      if(err) throw err;
+      req.session.score = result[0].score;
+      res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
+    });
+  })
 });
 
 router.get('/transaction/:id', (req,res,next) => {

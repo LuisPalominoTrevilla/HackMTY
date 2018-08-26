@@ -32,6 +32,6 @@ function createTransaction(trans_type, points, callback){
 
  function createQR(res){
     swal({
-        html: '<img src="https://api.qrserver.com/v1/create-qr-code/?data=https://localhost:3000/transaction/'+res+'&amp;size=400x400" alt="" title="" />'
+        html: '<img src="https://api.qrserver.com/v1/create-qr-code/?data=http://solidario.mx/transaction/'+res+'&amp;size=400x400" alt="" title="" />'
     })
 } 
