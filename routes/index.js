@@ -12,6 +12,8 @@ router.use((req, res, next) => {
       parameters: { "size": "200"}
     }
     req.avatar = gravatar.imageUrl(options);
+  }else if (req.session.authenticated && !req.session.isUser) {
+    req.avatar = req.session.picture;
   }
   next();
 });
@@ -35,8 +37,11 @@ router.get('/contact', (req, res, next) => {
 
 router.get('/profile', (req,res,next) => {
   // Restrict access to unauthorized personel
-  if (!req.session.authenticated || !req.session.isUser) {
+  if (!req.session.authenticated) {
     res.redirect( '/');
+    return;
+  }else if (!req.session.isUser){
+    res.render('local', {auth: req.session.authenticated, avatar: req.avatar});
     return;
   }
   res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});

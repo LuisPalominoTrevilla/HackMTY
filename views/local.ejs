@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/profile.css">
+        <% include Reusable/head.ejs %>        
+    </head>
+
+    <body>
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="dorne-load"></div>
+        </div>
+
+            <% include Reusable/header.ejs %>
+
+        <!-- ***** Breadcumb Area Start ***** -->
+        <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/hero-1.jpg)">
+        </div>
+        <!-- ***** Breadcumb Area End ***** -->
+
+        <!-- ***** About Area Start ***** -->
+        <section class="dorne-about-area section-padding-0-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="about-content text-center">
+                        <br><br>
+                            <img src="/img/defaultBusiness.png" alt="Smiley face" height="200" width="200" id="profileImage">
+                            <h2>Negocio <span>Tienda</span></h2>
+                            <p>Bienvenido</p>
+
+                        <form>
+                            <label>Tipo de transacción:</label>
+                            <select class="form-control form-control-lg" id="trans-type">
+                                <option value="exchange">Canjear puntos</option>
+                                <option value="buy">Generar puntos</option>
+                            </select>
+                            <input type="number" class="form-control" id="points" aria-describedby="points" placeholder="Points">
+
+                            <br>
+                            <button type="button" class="btn btn-outline-primary btn-lg btn-block" id="transaction">Enviar</button>
+                        </form>
+                        
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ***** About Area End ***** -->
+
+        <!-- ****** Footer Area Start ****** -->
+        <footer class="dorne-footer-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 d-md-flex align-items-center justify-content-between">
+                        <div class="footer-text">
+                            <p>
+
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- ****** Footer Area End ****** -->
+
+        <!-- Active JS -->
+        <script src="js/active.js"></script>
+        <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+        <script src="js/qrTransaction.js"></script>
+    </body>
+</html>
