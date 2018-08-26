@@ -23,7 +23,13 @@ router.post('/login', (req, res, next) => {
     con.query("SELECT client_id FROM client WHERE mail = " + mysql.escape(username) + " AND password = "+ mysql.escape(password), (err, result) => {
       con.release();
       if (err) throw err;
-      res.send("HOlA MUNDO");
+      if (result.length) {
+        console.log(result[0].client_id);
+        res.send(true);
+      }else {
+        console.log('NNONONONO');
+        res.send(false);
+      }
     });
   });
 })

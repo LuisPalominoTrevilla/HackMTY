@@ -22,9 +22,8 @@ $(document).ready(()=>{
                 if(result.value){
                     let username = document.getElementById('username').value;
                     let password = document.getElementById('inputPassword').value;
-                    console.log(email);
-                    console.log(password);
-                    $.post('api/login', {
+                    console.log("HOLA PUTO");
+                    $.post('/api/login', {
                         username: username, 
                         password: password
                     }).done(()=>{  
