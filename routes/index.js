@@ -25,6 +25,10 @@ router.get('/profile', (req,res,next) => {
   res.render('profile', {auth: req.session.authenticated});
 });
 
+router.get('/local', (req,res,next) =>{
+  res.render('local', {auth: req.session.authenticated})
+})
+
 router.get('/negocio/:id', (req, res, next) => {
   let shop_id = req.params.id;
   pool.getConnection((err, con) => {

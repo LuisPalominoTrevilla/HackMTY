@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pool = require('../db');
 const mysql = require('mysql');
-
+var random = require('random-number');
 /**
  * const gravatar = require('gravatar-api');
 
@@ -51,6 +51,94 @@ router.post('/login', (req, res, next) => {
     });
   });
 });
+
+router.post('/createTransaction', (req,res,next) =>{
+  /*var con = mysql.createConnection({
+    host: "solidario.mx/phpmyadmin",
+    user: "root",
+    password: "themaster",
+    database: "solidario"
+  });
+
+  con.connect((err)=>{
+    if(err) throw err;
+    con.query("SELECT trans_id FROM transaction", (err, result)=>{  
+      while(true){
+        var new_id = random(randomOptions);
+        var repeated = false;
+        for(var i = 0; i < result.length; i++){
+          if(new_id === result[i]){
+            repeated = true;
+            break;
+          }
+        }
+        if(!repeated){
+          break;
+        }
+        console.log("connected!");
+        let sql = 'INSERT INTO transaction (trans_id, trans_date, client_id, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '2018-08-26 07:07:08,'+ null +',' + shop_id +','+ trans_type +','+ 1 +')';
+        con.query(sql, (err,result)=>{
+          if(err) throw err;
+          console.log("1 record inserted");
+        })
+      }    
+    })
+  });
+});*/
+  pool.getConnection((err, con) => {
+    con.query("SELECT trans_id FROM transaction", (err, result)=>{  
+      while(true){
+        var shop_id = req.body.shop_id;
+        var client_id = null;
+        var trans_type = req.body.trans_type;
+        var points = req.body.points;
+        var repeated = false;
+
+        var randomOptions = {
+          min: 1,
+          max: 999999999,
+          integer: true
+        }
+        var new_id = random(randomOptions);
+        repeated = false;
+        for(var i = 0; i < result.length; i++){
+          if(new_id === result[i]){
+            repeated = true;
+            break;
+          }
+        }
+        if(!repeated){
+          break;
+        }
+      }
+      var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '"2018-08-26 07:07:08",' + shop_id +',"'+ trans_type +'"' + ',' + 1 +')';   
+      res.send(sql);
+      
+      con.query(sql, (err,result)=>{
+        if(err) throw err;
+        res.send(sql);  
+      })
+    });
+  });
+});
+        /*var sql = "INSERT INTO transaction (trans_id, trans_date, client_id, shop_id, trans_type, points) VALUES ?";
+        var values = [[ new_id, con.query('SELECT CURTIME();'),null,shop_id,trans_type,points]];
+        con.query(sql, [values], function(err, result) {
+          if (err) throw err;
+          // Render page
+          var success_page = '/success?code='+new_id;
+          res.send(success_page);  
+        })
+      }
+    }
+    con.query('INSERT INTO transaction (trans_id, trans_date, client_id, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '2018-08-26 07:07:08,'+ null +',' + shop_id +','+ trans_type +','+ 1 +')', ()=>{
+      res.send(201, new_id);*/
+
+
+router.post('/getQR', (req,res,next) =>{
+  let businessID = req.body.businessID;
+  if(err) throw err;
+})
 
 router.post('/logout', (req, res, next) => {
   if (req.session.authenticated) {

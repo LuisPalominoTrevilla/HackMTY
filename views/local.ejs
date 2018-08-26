@@ -25,11 +25,23 @@
                     <div class="col-12">
                         <div class="about-content text-center">
                         <br><br>
-                            <img src="/img/defaultProfile.jpg" alt="Smiley face" height="200" width="200" id="profileImage">
-                            <h2>Oscar <span>Sierra</span></h2>
-                            <p>Bienvenido, en este momento cuentas con 200pts</p>
-                            <p><strong>bio: </strong></p>
-                        </div>
+                            <img src="/img/defaultBusiness.png" alt="Smiley face" height="200" width="200" id="profileImage">
+                            <h2>Negocio <span>Tienda</span></h2>
+                            <p>Bienvenido</p>
+
+                        <form>
+                            <label>Tipo de transacción:</label>
+                            <select class="form-control form-control-lg" id="trans-type">
+                                <option value="exchange">Canjear puntos</option>
+                                <option value="buy">Generar puntos</option>
+                            </select>
+                            <input type="number" class="form-control" id="points" aria-describedby="points" placeholder="Points">
+
+                            <br>
+                            <button type="button" class="btn btn-outline-primary btn-lg btn-block" id="transaction">Block level button</button>
+                        </form>
+                        
+                        <br>
                     </div>
                 </div>
             </div>
@@ -58,6 +70,7 @@
 
         <!-- Active JS -->
         <script src="js/active.js"></script>
+        <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+        <script src="js/qrTransaction.js"></script>
     </body>
-
 </html>
