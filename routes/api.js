@@ -45,7 +45,7 @@ router.post('/login', (req, res, next) => {
         req.session.authenticated = true;
         res.send(true);
       }else {
-        console.log('NNONONONO');
+        // Couldn't sign in
         res.send(false);
       }
     });
@@ -54,7 +54,8 @@ router.post('/login', (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
   if (req.session.authenticated) {
-    console.log(req.session);
+    req.session.authenticated = null;
+    res.send(true);
   } else {
     res.send(false);
   }

@@ -6,20 +6,19 @@ const mysql = require('mysql');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  console.log(req.session);
-  res.render('index');
+  res.render('index', {auth: req.session.authenticated});
 });
 
 router.get('/about', (req, res, next) => {
-  res.render('about');
+  res.render('about', {auth: req.session.authenticated});
 });
 
 router.get('/listing', (req, res, next) => {
-  res.render('listing');
+  res.render('listing', {auth: req.session.authenticated});
 });
 
 router.get('/contact', (req, res, next) => {
-  res.render('contact');
+  res.render('contact', {auth: req.session.authenticated});
 });
 
 router.get('/negocio/:id', (req, res, next) => {
@@ -30,7 +29,7 @@ router.get('/negocio/:id', (req, res, next) => {
       con.release();
       if(err) throw err;
       if(results.length != 0) {
-        res.render('negocio', { image: results[0].picture, name: results[0].shop_name, direction: results[0].direction, category: results[0].category, lat: results[0].latitude, lgt: results[0].longitude });
+        res.render('negocio', { image: results[0].picture, name: results[0].shop_name, direction: results[0].direction, category: results[0].category, lat: results[0].latitude, lgt: results[0].longitude, auth: req.session.authenticated });
       }else{
         next();
       }
@@ -38,7 +37,7 @@ router.get('/negocio/:id', (req, res, next) => {
   });
 });
 
-router.get('/profile', (req,res,next) =>{
+router.get('/profile', (req,res,next) => {
   res.render('profile');
 })
 
