@@ -21,7 +21,7 @@ console.log(avatar);
 router.get('/getNegocios', (req, res, next) => {
   pool.getConnection((err, con) => {
     if (err) throw err;
-    con.query("SELECT shop_id, shop_name, direction, c.display_name AS category, s.latitude, s.longitude, s.picture, z.zone_name AS zone FROM shop s JOIN category c ON s.category = c.cat_id JOIN zone z ON s.zone = z.zone_id", (err, result) => {
+    con.query("SELECT shop_id, shop_name, direction, c.display_name AS category, s.picture, z.zone_name AS zone FROM shop s JOIN category c ON s.category = c.cat_id JOIN zone z ON s.zone = z.zone_id", (err, result) => {
       con.release();
       if (err) throw err;
       res.json(result);
