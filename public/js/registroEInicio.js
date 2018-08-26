@@ -33,8 +33,8 @@ $(document).ready(()=>{
                                 'success'
                             ).then(()=>{
                                 window.location.reload();
-                            })
-                        }
+                            })  
+                         }
                         else{
                             swal({
                                 type: 'error',

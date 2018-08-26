@@ -48,6 +48,10 @@ router.get('/transaction', (req,res,next) => {
   res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
+router.get('/local', (req,res,next) =>{
+  res.render('local', {auth: req.session.authenticated})
+})
+
 router.get('/negocio/:id', (req, res, next) => {
   let shop_id = req.params.id;
   pool.getConnection((err, con) => {
