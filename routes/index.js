@@ -8,7 +8,7 @@ const gravatar = require('gravatar-api');
 router.use((req, res, next) => {
   if(req.session.authenticated && req.session.isUser) {
     let options = {
-      email: req.session.name,
+      email: req.session.mail,
       parameters: { "size": "200"}
     }
     req.avatar = gravatar.imageUrl(options);
@@ -34,7 +34,12 @@ router.get('/contact', (req, res, next) => {
 });
 
 router.get('/profile', (req,res,next) => {
-  res.render('profile', {auth: req.session.authenticated, avatar: req.avatar});
+  // Restrict access to unauthorized personel
+  if (!req.session.authenticated || !req.session.isUser) {
+    res.redirect( '/');
+    return;
+  }
+  res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
 });
 
 router.get('/transaction', (req,res,next) => {
