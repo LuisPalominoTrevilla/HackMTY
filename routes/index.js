@@ -26,7 +26,7 @@ router.get('/about', (req, res, next) => {
 });
 
 router.get('/listing', (req, res, next) => {
-  res.render('listing', {auth: req.session.authenticated, avatar: req.avatar});
+  res.render('listing?cat=all', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/contact', (req, res, next) => {
