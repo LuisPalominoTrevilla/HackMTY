@@ -5,10 +5,10 @@ $(document).ready(()=>{
                 title: "<h2>Inicia sesión</h2>",
                 type: "info",
                 html: `
-                <form action="http://foo" method="POST">
+                <form>
                     <div class="form-group">
-                        <label for="inputEmail1">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Correo">
+                        <label for="inputEmail1">Usuario</label>
+                        <input type="username" class="form-control" id="username" aria-describedby="username" placeholder="Usuario">
                         <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie </small>
                     </div>
                     <div class="form-group">
@@ -20,12 +20,12 @@ $(document).ready(()=>{
                 confirmButtonText: "Inicia sesión"
             }).then((result)=>{
                 if(result.value){
-                    let email = document.getElementById('email').value;
+                    let username = document.getElementById('username').value;
                     let password = document.getElementById('inputPassword').value;
                     console.log(email);
                     console.log(password);
                     $.post('api/login', {
-                        email: email, 
+                        username: username, 
                         password: password
                     }).done(()=>{  
                     swal(
