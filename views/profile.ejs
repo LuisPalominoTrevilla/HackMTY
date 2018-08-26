@@ -28,6 +28,38 @@
                             <img src="<%= avatar %>" alt="Smiley face" height="200" width="200" id="profileImage">
                             <h2><%= name %> <span><%= last_name %></span></h2>
                             <p>Bienvenido, en este momento cuentas con <span style="font-size: 25px; font-weight: bold"><%= score %>pts</span></p>
+                        
+                            <br>
+
+                            <p>Historial de transacciones:</p>
+                            <div id="app">
+                                <div id="transactions-container">
+                                    <table class="table table-striped">
+                                            <thead>
+                                            <tr class="table-head">
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Tienda</th>
+                                                <th scope="col">tipo</th>
+                                                <th scope="col">Puntos</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="transaction in transactions">
+                                                    <td>{{transaction.trans_date}}</td>
+                                                    <td>{{transaction.shop_name}}</td>
+                                                    <td v-if="transaction.trans_type == 'buy'">
+                                                        Compra
+                                                    </td>
+                                                    <td v-else>
+                                                        Canjeo de puntos
+                                                    </td>
+                                                    <td>{{transaction.points}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -57,6 +89,21 @@
 
         <!-- Active JS -->
         <script src="js/active.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    transactions: []
+                },
+                created(){
+                    $.get('api/getTransactions', (res)=>{
+                        this.transactions = res;      
+                    })
+                }
+            })
+        </script>
     </body>
 
 </html>

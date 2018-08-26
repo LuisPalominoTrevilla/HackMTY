@@ -54,6 +54,7 @@ router.get('/getNegociosTwoParam', (req, res, next) => {
       });
     });
   }
+
 });
 
 router.post('/createTransaction', (req,res,next) =>{
@@ -82,11 +83,20 @@ router.post('/createTransaction', (req,res,next) =>{
             break;
           }
         }
-        var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', ' + '"2018-08-26 07:07:08",' + shop_id +',"'+ trans_type +'"' + ',' + points +')';
+        let NOW = new Date();
+        var options = { day: 'numeric', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+        NOW = NOW.toLocaleDateString('en-US', options).replace(" AM", "").replace(",", "").split(" ");
+        const month = NOW[0].split('/')[0];
+        const day = NOW[0].split('/')[1];
+        const year = NOW[0].split('/')[2];
+        NOW = year + "-" + month + "-" + day + " " + NOW[1];
+        console.log(NOW);
+        var sql = 'INSERT INTO transaction (trans_id, trans_date, shop_id, trans_type, points) VALUES (' + new_id + ', "' + NOW  + '"' + "," + shop_id +',"'+ trans_type +'"' + ',' + points +')';
+        console.log(sql)
         con.query(sql, (err,result)=>{
           if(err) throw err;
           res.send(200, new_id);
-        })
+        });
       });
     });
   }
