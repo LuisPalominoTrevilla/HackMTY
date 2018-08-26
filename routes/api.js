@@ -35,14 +35,14 @@ router.post('/login', (req, res, next) => {
   pool.getConnection((err, con) => {
     if (err) throw err;
     if (username.includes("@")){
-      con.query("SELECT client_id, score, names AS name, last_names AS last_name, mail FROM client WHERE mail = " + mysql.escape(username) + " AND password = "+ mysql.escape(password), (err, result) => {
+      con.query("SELECT client_id, score, names AS name, last_names AS last_name FROM client WHERE mail = " + mysql.escape(username) + " AND password = "+ mysql.escape(password), (err, result) => {
         con.release();
         if (err) throw err;
         if (result.length) {
           req.session.client_id = result[0].client_id;
           req.session.name = result[0].name;
           req.session.last_name = result[0].last_name;
-          req.session.mail = result[0].mail;
+          req.session.mail = username;
           req.session.isUser = true;
           req.session.score = result[0].score;
           req.session.authenticated = true;
@@ -52,7 +52,26 @@ router.post('/login', (req, res, next) => {
           res.send(false);
         }
       });
-    }else {
+    }else if (!isNaN(username)) {
+      // It's a shop
+      username = parseInt(username);
+      con.query("SELECT shop_id, picture FROM shop WHERE shop_id = " +mysql.escape(username) + " and password = " + mysql.escape(password), (err, result) => {
+        console.log(result);
+        con.release();
+        if (err) throw err;
+        if(result.length) {
+          // If shop username and password was correct
+          req.session.authenticated = true;
+          req.session.isUser = false;
+          req.session.shop_id = result[0].shop_id;
+          req.session.picture = result[0].picture;
+          res.send(true);
+        }else{
+          // couldn't sign in
+          res.send(false);
+        }
+      });
+    }else{
       res.send(false);
     }
   });

@@ -12,6 +12,8 @@ router.use((req, res, next) => {
       parameters: { "size": "200"}
     }
     req.avatar = gravatar.imageUrl(options);
+  }else if (req.session.authenticated && !req.session.isUser) {
+    req.avatar = req.session.picture;
   }
   next();
 });
