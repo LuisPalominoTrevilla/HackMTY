@@ -28,7 +28,7 @@ router.get('/about', (req, res, next) => {
 });
 
 router.get('/listing', (req, res, next) => {
-  res.render('listing', {auth: req.session.authenticated, avatar: req.avatar});
+  res.render('listing?cat=all', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/contact', (req, res, next) => {
@@ -47,8 +47,62 @@ router.get('/profile', (req,res,next) => {
   res.render('profile', {auth: req.session.authenticated, avatar: req.avatar, name: req.session.name, last_name: req.session.last_name, score: req.session.score});
 });
 
-router.get('/transaction', (req,res,next) => {
-  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar});
+router.get('/transaction/:id', (req,res,next) => {
+  if(req.session.authenticated == true){
+    if(req.session.isUser == true){
+      let user_id = req.session.client_id;
+      let trans_id = req.params.id;
+      pool.getConnection((err,con) => {
+        if(err) throw err;
+        con.query('SELECT client_id, points FROM transaction WHERE trans_id=' + mysql.escape(trans_id), (err, results) => {
+          if(err){
+            throw err;
+            con.release();
+          }
+          let trans_points = results[0].points;
+          if(results[0].client_id == null){
+            con.query('UPDATE transaction SET client_id=' + mysql.escape(user_id) + ' WHERE trans_id=' + mysql.escape(trans_id), (err, answer) => {
+              if(err){
+                throw err;
+                con.release();
+              }
+              con.query('SELECT score FROM client WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
+                if(err){
+                  throw err;
+                  con.release();
+                }
+                let sum = answer[0].score + trans_points;
+                if(sum >= 0){
+                  con.query('UPDATE client SET score=' + mysql.escape(sum) +' WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
+                    if(err){
+                      throw err;
+                      con.release();
+                    }
+                    con.query('SELECT names FROM client WHERE client_id = ' + mysql.escape(user_id), (err, answer) => {
+                      if(err) throw err;
+                      con.release();
+                      if(trans_points > 0) res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAZ GANADO " + trans_points + " PUNTOS!"});
+                      else res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAZ CANJEADO " + trans_points*-1 + " PUNTOS!"});
+                    });
+                  });
+                } else {
+                  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: "", points: "NO TIENES SUFICIENTES PUNTOS EN TU CUENTA"});
+                }
+              });
+            });
+          } else {
+            res.redirect('/');
+            return;
+          }
+        });
+      });
+    } else {
+      res.render('index', {auth: req.session.authenticated, avatar: req.avatar});
+    }
+  } else {
+    res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "/js/loginForced.js", name: "", points: ""});
+  }
+
 });
 
 router.get('/negocio/:id', (req, res, next) => {
