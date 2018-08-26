@@ -22,8 +22,6 @@ $(document).ready(()=>{
                 if(result.value){
                     let username = document.getElementById('username').value;
                     let password = document.getElementById('inputPassword').value;
-                    console.log(email);
-                    console.log(password);
                     $.post('api/login', {
                         username: username, 
                         password: password
@@ -79,10 +77,6 @@ $(document).ready(()=>{
                 let lastName = document.getElementById('lastName').value;
                 let email = document.getElementById('email').value;
                 let password = document.getElementById('inputPassword').value;
-                console.log(lastName);
-                console.log(email);
-                console.log(username);
-                console.log(password);
                 $.post('api/register', {
                     username: username,
                     lastName: lastName,
