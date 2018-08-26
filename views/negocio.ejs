@@ -12,7 +12,7 @@
     <% include Reusable/header.ejs %>
 
     <!-- ***** Breadcumb Area Start ***** -->
-    <div class="breadcumb-area height-500 bg-img bg-overlay" id="header-img" style="background-image: url(/img/bg-img/breadcumb.jpg)">
+    <div class="breadcumb-area height-500 bg-img bg-overlay" id="header-img" style="background-image: url(<%= image %>)">
     </div>
     <!-- ***** Breadcumb Area End ***** -->
 
@@ -25,8 +25,8 @@
                     <div class="single-listing-content">
 
                         <div class="listing-title">
-                            <h4>Nombre del Negocio</h4>
-                            <h6>Direcci&oacute;n</h6>
+                            <h4><%= name %></h4>
+                            <h6><%= direction %></h6>
                         </div>
 
                         <div class="location-on-map mt-50" id="lomap">
@@ -44,7 +44,7 @@
 
                         <!-- Listing Verify -->
                         <div class="listing-verify">
-                            <a href="#" class="btn dorne-btn w-100">Categor&iacute;a</a>
+                            <a href="#" class="btn dorne-btn w-100"> <%= category %> </a>
                         </div>
 
                         <!-- Opening Hours Widget -->
