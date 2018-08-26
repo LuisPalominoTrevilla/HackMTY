@@ -1,17 +1,30 @@
 $('#transaction').click(()=>{
     console.log(document.getElementById('trans-type').value);
+    
+    let points = document.getElementById('points').value;
+
     if(document.getElementById('trans-type').value === 'buy'){
-        createTransaction((res)=>{
+        if( points < 0){
+            points = points * -1
+        }
+        createTransaction('buy',points, (res)=>{
+            createQR(res);
+        })
+    }else if(document.getElementById('trans-type').value === 'exchange'){
+        if( points > 0){
+            points = points * -1
+        }
+        createTransaction('exchange', points, (res)=>{
             createQR(res);
         })
     }
-        
 });
 
-function createTransaction(callback){
+
+function createTransaction(trans_type, points, callback){
     $.post('api/createTransaction', {
-        trans_type: 'buy',
-        points: document.getElementById('points').value
+        trans_type: trans_type,
+        points: points
     }).then((res)=>{
         callback(res);
     });
