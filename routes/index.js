@@ -37,8 +37,42 @@ router.get('/profile', (req,res,next) => {
   res.render('profile', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
-router.get('/transaction', (req,res,next) => {
-  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar});
+router.get('/transaction/:id', (req,res,next) => {
+  if(req.session.authenticated == true){
+    if(req.session.isUser == true){
+      let user_id = req.session.client_id;
+      let trans_id = req.params.id;
+      pool.getConnection((err,con) => {
+        if(err) throw err;
+        con.query('SELECT client_id, points FROM transaction WHERE trans_id=' + mysql.escape(trans_id), (err, results) => {
+          con.release();
+          if(err) throw err;
+          if(results[0].client_id == null){
+            console.log("NO HABIA ID");
+            con.query('UPDATE transaction SET client_id=' + mysql.escape(user_id) + ' WHERE trans_id=' + mysql.escape(trans_id), (err, answer) => {
+              con.release();
+              if(err) throw err;
+            console.log(answer);
+            });
+          } else {
+            console.log("YA HAY ID");
+            next();
+          }
+        });
+      });
+      //res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: ""});
+    } else {
+      res.render('index', {auth: req.session.authenticated, avatar: req.avatar});
+    }
+  } else {
+    res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "/js/loginForced.js"});
+  }
+  //let trans_id = req.params.id;
+  //let user_id = req.session.client_id;
+  //pool.getConnection((err, con) => {
+  //  con.query('SELECT ')
+  //});
+
 });
 
 router.get('/negocio/:id', (req, res, next) => {
