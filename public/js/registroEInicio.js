@@ -5,7 +5,7 @@ $(document).ready(()=>{
                 title: "<h2>Inicia sesión</h2>",
                 type: "info",
                 html: `
-                <form>
+                <form action="http://foo" method="POST">
                     <div class="form-group">
                         <label for="inputEmail1">Correo electrónico</label>
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Correo">
@@ -24,11 +24,15 @@ $(document).ready(()=>{
                     let password = document.getElementById('inputPassword').value;
                     console.log(email);
                     console.log(password);
+                    $.post('api/login', {
+                        email: email, 
+                        password: password
+                    }).done(()=>{  
                     swal(
                         'Exito!',
                         'iniciarás sesión en un segundo',
                         'success'
-                      )
+                      )})
                 }
                 else{
                     swal({
@@ -79,11 +83,20 @@ $(document).ready(()=>{
                 console.log(email);
                 console.log(username);
                 console.log(password);
-                swal(
-                    'Exito!',
-                    'iniciarás sesión en un segundo',
-                    'success'
-                  )
+                $.post('api/register', {
+                    username: username,
+                    lastName: lastName,
+                    email: email,
+                    password: password
+                }
+                ).done(()=>{
+                    swal(
+                        'Exito!',
+                        'iniciarás sesión en un segundo',
+                        'success'
+                    )    
+                })
+                
             }
             else{
                 swal({
