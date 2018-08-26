@@ -4,6 +4,7 @@ var path = require('path');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+  console.log(req.session);
   res.render('index');
 });
 

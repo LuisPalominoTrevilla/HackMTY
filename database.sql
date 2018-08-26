@@ -61,7 +61,8 @@ CREATE TABLE transaction (
 INSERT INTO shop (shop_name, direction, category, latitude, longitude, picture, zone, password) VALUES 
 ('Tacos Don Miguelón', 'Avenida Santa Margarita 3849, La Toscana, 45136 Guadalajara, Jal', 1, 20.729723, -103.433157, 'http://ofaa.mx/wp-content/uploads/2015/12/01-Don-Miguelon-Plaza-Toscana.jpg', 1, 'taquitos'),
 ('Floreria Valle Real', 'Av. Santa Margarita 4646 Valle Real 45140 Zapopan, JAL', 5, 20.729688, -103.436050, 'https://www.citymarket.com.mx/images/departamentos/FLORERIA/corte-floreria.jpg', 1, 'floresitas'),
-('Adonis Barberia Club', 'Av. Santa Margarita 4099 Local A13, Jardín Real, 45136 Zapopan, Jal', 3, 20.729189,  -103.435190, 'http://retaildesignblog.net/wp-content/uploads/2017/07/Jack-the-Clipper-flagship-barbershop-by-FormRoom-London-UK.png', 1, 'barbitas');
+('Adonis Barberia Club', 'Av. Santa Margarita 4099 Local A13, Jardín Real, 45136 Zapopan, Jal', 3, 20.729189,  -103.435190, 'http://retaildesignblog.net/wp-content/uploads/2017/07/Jack-the-Clipper-flagship-barbershop-by-FormRoom-London-UK.png', 1, 'barbitas'),
+('Hola Mundo', 'Av. Santa Margarita 4099 Local A13, Jardín Real, 45136 Zapopan, Jal', 2, 20.729189,  -103.435190, 'http://retaildesignblog.net/wp-content/uploads/2017/07/Jack-the-Clipper-flagship-barbershop-by-FormRoom-London-UK.png', 1, 'barbitas');
 
 INSERT INTO client (names, last_names, mail, password) VALUES ('Luis', 'Palomino Trevilla', 'luispalominot@hotmail.com', 'themaster'), 
 ('Emanuel', 'Estrada Larios', 'em@nuel.xyz', 'hahaha'),
