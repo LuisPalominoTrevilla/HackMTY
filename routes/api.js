@@ -3,17 +3,6 @@ var router = express.Router();
 var pool = require('../db');
 const mysql = require('mysql');
 
-/**
- * const gravatar = require('gravatar-api');
-
-let options = {
-    email: 'emamex98@gmail.com'
-}
-
-const avatar = gravatar.imageUrl(options);
-console.log(avatar);
- */
-
  router.get('/', (req, res, next) => {
    res.send("API is alive")
  });
