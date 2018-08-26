@@ -31,7 +31,9 @@ $(document).ready(()=>{
                                 'Exito!',
                                 'iniciarás sesión en un segundo',
                                 'success'
-                            )
+                            ).then(()=>{
+                                window.location.reload();
+                            })
                         }
                         else{
                             swal({
@@ -116,6 +118,10 @@ $(document).ready(()=>{
     $('#cerrarSesion').click(()=>{
         $.post('api/logout',{
             
+        }).then((success)=>{
+            if(success){
+                window.location.reload();
+            }
         })
     })
 

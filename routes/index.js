@@ -21,6 +21,10 @@ router.get('/contact', (req, res, next) => {
   res.render('contact', {auth: req.session.authenticated});
 });
 
+router.get('/profile', (req,res,next) => {
+  res.render('profile', {auth: req.session.authenticated});
+});
+
 router.get('/negocio/:id', (req, res, next) => {
   let shop_id = req.params.id;
   pool.getConnection((err, con) => {
@@ -37,8 +41,5 @@ router.get('/negocio/:id', (req, res, next) => {
   });
 });
 
-router.get('/profile', (req,res,next) => {
-  res.render('profile');
-});
 
 module.exports = router;
