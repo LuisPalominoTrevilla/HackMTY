@@ -57,6 +57,24 @@ router.get('/getNegociosTwoParam', (req, res, next) => {
 
 });
 
+router.get('/getTransactions', (req, res, next) => {
+  sql = "";
+  if (req.session.authenticated && req.session.isUser) {
+    sql = "SELECT t.trans_date, t.trans_type, t.points, s.shop_name FROM transaction t JOIN shop s ON t.shop_id = s.shop_id WHERE t.client_id = "+mysql.escape(req.session.client_id)+" ORDER BY t.trans_date DESC";
+  }else if (req.session.authenticated && !req.session.isUser) {
+    sql = "SELECT t.trans_date, t.trans_type, t.points, CONCAT(c.names, ' ' , c.last_names) As name FROM transaction t JOIN client c ON t.client_id = c.client_id WHERE t.shop_id = "+mysql.escape(req.session.shop_id)+" ORDER BY t.trans_date DESC";
+  }
+  console.log(sql);
+  pool.getConnection((err, con) => {
+    if (err) throw err;
+    con.query(sql, (err, result) => {
+      con.release();
+      if (err) throw err;
+      res.json(result);
+    });
+  });
+});
+
 router.post('/createTransaction', (req,res,next) =>{
   if(req.session.authenticated && !req.session.isUser){
     pool.getConnection((err, con) => {
