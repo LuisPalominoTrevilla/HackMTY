@@ -38,7 +38,7 @@ router.get('/profile', (req,res,next) => {
 });
 
 router.get('/transaction', (req,res,next) => {
-  res.render('transaction', {auth: req.session.authenticated});
+  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/negocio/:id', (req, res, next) => {
