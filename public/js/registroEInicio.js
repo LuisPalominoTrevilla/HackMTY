@@ -113,4 +113,10 @@ $(document).ready(()=>{
         });
     });
 
+    $('#cerrarSesion').click(()=>{
+        $.post('api/logout',{
+            
+        })
+    })
+
 })  
