@@ -17,21 +17,31 @@ $(document).ready(()=>{
                     </div>
                 </form> `,
                 showCancelButton: false,
-                confirmButtonText: "Inicia sesión"
+                confirmButtonText: "Inicia sesión"  
             }).then((result)=>{
                 if(result.value){
                     let username = document.getElementById('username').value;
                     let password = document.getElementById('inputPassword').value;
-                    console.log("HOLA PUTO");
                     $.post('/api/login', {
                         username: username, 
                         password: password
-                    }).done(()=>{  
-                    swal(
-                        'Exito!',
-                        'iniciarás sesión en un segundo',
-                        'success'
-                      )})
+                    }).done((isInDB)=>{
+                        if(isInDB){ 
+                            swal(
+                                'Exito!',
+                                'iniciarás sesión en un segundo',
+                                'success'
+                            )
+                        }
+                        else{
+                            swal({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: '¡Algo salió mal!',
+                              })
+                        }
+                    })
+                        
                 }
                 else{
                     swal({
@@ -78,10 +88,6 @@ $(document).ready(()=>{
                 let lastName = document.getElementById('lastName').value;
                 let email = document.getElementById('email').value;
                 let password = document.getElementById('inputPassword').value;
-                console.log(lastName);
-                console.log(email);
-                console.log(username);
-                console.log(password);
                 $.post('api/register', {
                     username: username,
                     lastName: lastName,
@@ -106,5 +112,11 @@ $(document).ready(()=>{
             }
         });
     });
+
+    $('#cerrarSesion').click(()=>{
+        $.post('api/logout',{
+            
+        })
+    })
 
 })  

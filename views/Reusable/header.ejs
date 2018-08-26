@@ -22,12 +22,28 @@
                                 <a class="nav-link" href="/contact">Contacto </a>
                             </li>
                         </ul>
+                        <% if(false){ %>       
+                            <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 100px">
+                                        <img alt="profilepic" src="img/defaultProfile.jpg" style="width: 60px; height: 50px; border-radius: 100%">
+                                    </button>
+                                    
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Perfil</a>
+                                    <a class="dropdown-item" href="#" id="cerrarSesion">Cerrar sesión</a>
+                                </div>
+                            </div>
+                        <% } else{ %>
                         <div class="dorne-signin-btn">
-                            <a href="#" id="login">Iniciar Sesi&oacute;n</a>
-                        </div>
-                        <!-- Add listings btn -->
-                        <div class="dorne-add-listings-btn">
-                            <a href="#" class="btn dorne-btn" id="register">&Uacute;nete</a>
+                                <a href="#" id="login">Iniciar Sesi&oacute;n</a>
+                            </div>
+                            <!-- Add listings btn -->
+                            <div class="dorne-add-listings-btn">
+                                <a href="#" class="btn dorne-btn" id="register">&Uacute;nete</a>
+                            </div>
+                            <div>
+                        <% } %>    
+                        
                         </div>
                     </div>
                 </nav>
@@ -38,4 +54,6 @@
 
 <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 <script src="/js/registroEInicio.js"></script>
+<link rel="stylesheet" type="text/css" href="css/profile.css">
+
 <!-- ***** Header Area End ***** -->
