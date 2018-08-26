@@ -61,16 +61,28 @@ router.get('/transaction/:id', (req,res,next) => {
                 throw err;
                 con.release();
               }
-              con.query('UPDATE client SET score=score+' + mysql.escape(results[0].points) +' WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
+              con.query('SELECT score FROM client WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
                 if(err){
                   throw err;
                   con.release();
                 }
-                con.query('SELECT names FROM client WHERE client_id = ' + mysql.escape(user_id), (err, answer) => {
-                  if(err) throw err;
-                  con.release();
-                  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names, points: trans_points});
-                });
+                let sum = answer[0].score + trans_points;
+                if(sum >= 0){
+                  con.query('UPDATE client SET score=' + mysql.escape(sum) +' WHERE client_id=' + mysql.escape(user_id), (err, answer) => {
+                    if(err){
+                      throw err;
+                      con.release();
+                    }
+                    con.query('SELECT names FROM client WHERE client_id = ' + mysql.escape(user_id), (err, answer) => {
+                      if(err) throw err;
+                      con.release();
+                      if(trans_points > 0) res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAZ GANADO " + trans_points + " PUNTOS!"});
+                      else res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: answer[0].names + ", ", points: "¡HAZ CANJEADO " + trans_points*-1 + " PUNTOS!"});
+                    });
+                  });
+                } else {
+                  res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "", name: "", points: "NO TIENES SUFICIENTES PUNTOS EN TU CUENTA"});
+                }
               });
             });
           } else {
