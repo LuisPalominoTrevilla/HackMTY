@@ -28,7 +28,7 @@ router.get('/about', (req, res, next) => {
 });
 
 router.get('/listing', (req, res, next) => {
-  res.render('listing?cat=all', {auth: req.session.authenticated, avatar: req.avatar});
+  res.render('listing', {auth: req.session.authenticated, avatar: req.avatar});
 });
 
 router.get('/contact', (req, res, next) => {
@@ -58,6 +58,10 @@ router.get('/transaction/:id', (req,res,next) => {
           if(err){
             throw err;
             con.release();
+          }
+          if(results.length == 0){
+            res.redirect('/');
+            return;
           }
           let trans_points = results[0].points;
           if(results[0].client_id == null){
@@ -97,7 +101,8 @@ router.get('/transaction/:id', (req,res,next) => {
         });
       });
     } else {
-      res.render('index', {auth: req.session.authenticated, avatar: req.avatar});
+      res.redirect('/');
+      return;
     }
   } else {
     res.render('transaction', {auth: req.session.authenticated, avatar: req.avatar, login: "/js/loginForced.js", name: "", points: ""});
