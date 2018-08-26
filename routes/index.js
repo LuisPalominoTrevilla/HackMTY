@@ -23,4 +23,8 @@ router.get('/negocio/:id', (req, res, next) => {
   res.render('negocio');
 });
 
+router.get('/profile', (req,res,next) =>{
+  res.render('profile');
+})
+
 module.exports = router;

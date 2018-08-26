@@ -17,20 +17,31 @@ $(document).ready(()=>{
                     </div>
                 </form> `,
                 showCancelButton: false,
-                confirmButtonText: "Inicia sesión"
+                confirmButtonText: "Inicia sesión"  
             }).then((result)=>{
                 if(result.value){
                     let username = document.getElementById('username').value;
                     let password = document.getElementById('inputPassword').value;
-                    $.post('api/login', {
+                    $.post('/api/login', {
                         username: username, 
                         password: password
-                    }).done(()=>{  
-                    swal(
-                        'Exito!',
-                        'iniciarás sesión en un segundo',
-                        'success'
-                      )})
+                    }).done((isInDB)=>{
+                        if(isInDB){ 
+                            swal(
+                                'Exito!',
+                                'iniciarás sesión en un segundo',
+                                'success'
+                            )
+                        }
+                        else{
+                            swal({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: '¡Algo salió mal!',
+                              })
+                        }
+                    })
+                        
                 }
                 else{
                     swal({
