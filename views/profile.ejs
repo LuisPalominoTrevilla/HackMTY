@@ -37,7 +37,6 @@
                                     <table class="table table-striped">
                                             <thead>
                                             <tr class="table-head">
-                                                <th scope="col">#</th>
                                                 <th scope="col">Fecha</th>
                                                 <th scope="col">Tienda</th>
                                                 <th scope="col">tipo</th>
@@ -46,11 +45,15 @@
                                             </thead>
                                             <tbody>
                                                 <tr v-for="transaction in transactions">
-                                                    <th scope="row">1</th>
-                                                    <td>{{transaction.fecha}}</td>
-                                                    <td>{{transaction.tienda}}</td>
-                                                    <td>{{transaction.tipo}}</td>
-                                                    <td>{{transaction.puntos}}</td>
+                                                    <td>{{transaction.trans_date}}</td>
+                                                    <td>{{transaction.shop_name}}</td>
+                                                    <td v-if="transaction.trans_type == 'buy'">
+                                                        Compra
+                                                    </td>
+                                                    <td v-else>
+                                                        Canjeo de puntos
+                                                    </td>
+                                                    <td>{{transaction.points}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -92,20 +95,12 @@
             var app = new Vue({
                 el: '#app',
                 data: {
-                    transactions: [
-                        {
-                            "fecha":"24-04-2018",
-                            "tienda":"taquitos",
-                            "tipo":"buy",
-                            "puntos": 3
-                        },
-                        {
-                            "fecha":"22-04-2018",
-                            "tienda":"box",
-                            "tipo":"exchange",
-                            "puntos": -3
-                        }
-                    ]
+                    transactions: []
+                },
+                created(){
+                    $.get('api/getTransactions', (res)=>{
+                        this.transactions = res;      
+                    })
                 }
             })
         </script>
